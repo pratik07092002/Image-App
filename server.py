@@ -2,7 +2,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-app.route('/upload')
+@app.route('/upload' , methods =['POST'] )
 def sendImg():
     imagefile = request.files['image']
     imagefile.save('uploads/' + imagefile.filename)

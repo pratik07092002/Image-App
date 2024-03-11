@@ -50,7 +50,7 @@ try {
       body:  SafeArea(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children:<Widget> [
-          Text("Select and Send Image to desktop through below method using IP address"),
+          Text("Select and Send Image to desktop through below method using IP address" , style: TextStyle(color: Colors.purple.shade200),),
           SizedBox(height: 50,),
         ElevatedButton(onPressed: SelectImage, child: Text("Select Image")),
           // selected image display 
