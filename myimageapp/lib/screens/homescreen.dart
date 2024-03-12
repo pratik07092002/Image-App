@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   File? ImageFile;
+  String Predicted_char = "";
   Future<void> SelectImage() async{
 var picker = ImagePicker();
 final pickedimg = await picker.pickImage(source: ImageSource.gallery);
@@ -28,16 +29,22 @@ else{
 });
   }
 
-  Future<void> _SendImage() async{
-if(ImageFile != null){
-try {
-  await sendImage(ImageFile!);
-} catch (e) {
-  Fluttertoast.showToast(msg: "Error in ui ${e}");
-}
+Future<void> _SendImage() async {
+  if (ImageFile != null) {
+    try {
+      String predictedChar = (await sendImage(ImageFile!));
+
+      // Update the state with the predicted character
+      setState(() {
+        Predicted_char = predictedChar.toString();
+      });
+
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Error in UI: $e");
+    }
+  }
 }
 
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +64,10 @@ try {
       ImageFile == null ? Text(" NO Image Selected") : Image.file(ImageFile!),
         SizedBox(height: 30,),
         ElevatedButton(onPressed: _SendImage, child: Text("Send Image")),
-
+          
+      SizedBox(height: 10,)
+      ,
+      Text("Output:-: ${Predicted_char}" , style: TextStyle(color: Colors.white),)
           
       ],)),
     );
